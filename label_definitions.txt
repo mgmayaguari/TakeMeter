@@ -9,5 +9,6 @@
 # hot_take: a confident claim with no support offered
 # reaction: an immediate response to something that just happened
 
-update: reporting on the person's own ongoing progress since an earlier post they made, usually referencing or linking back to it
+milestone: reporting on the person's own ongoing progress since an earlier post they made, usually referencing or linking back to it
 plan: proposing or refining a forward-looking financial strategy, often asking for feedback on choices not yet made
+query: seeking direct technical or procedural answers

@@ -54,7 +54,7 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `update`
+### `milestone`
 
 **Definition:** A post reporting on the person's own ongoing progress since an earlier post they made, usually referencing or linking back to it.
 
@@ -78,6 +78,40 @@ Hi folks! I'm aiming to reach financial independence by age 32 (in 5 years) and 
 > Making your FIRE Plan “near” bulletproof
 GM All
 Hoping to connect and better understand your strategies in ensuring your portfolio is as close to resilient & bulletproof as possible. It seems many are quick to list their balances, but not so much how they diversified to weather SORR. Let me know where you’re at!
+
+### `query`
+
+**Definition:** A post seeking direct technical or procedural answers.
+
+**Example 1:**
+> Salary Increased - No Longer Roth Eligible… but Scared of the Backdoor Roth Process 😅 Advice?
+Hi everyone!
+I had a salary increase this year, which is great… until I realized I no longer qualify to contribute directly to a Roth IRA. My initial reaction was, “Cool, I’ll just do the backdoor!”
+But then I learned about the pro-rata rule (fun times), and now things feel a little more complicated.
+I have an old Traditional IRA (~$340K) from a 401k rollover years ago. From what I’ve been reading, the cleanest way to do a backdoor Roth is to roll that IRA into my current 401k plan. That would “zero out” the IRA and let me do a clean conversion.
+But honestly… Rolling over $340K feels intimidating. I know it’s all just ETFs and nothing is actually being “sold” in a taxable sense inside these accounts, but emotionally it still feels like a huge move.
+Part of me is thinking: Should I even bother with the backdoor Roth at all? Or should I just skip the drama and continue beefing up my taxable brokerage instead?
+Has anyone here:
+Rolled a large IRA into a 401k?
+Am I overthinking this process?
+Chosen to not do backdoor Roth and just invest in taxable instead?
+I’m trying to decide if the tax-free growth is worth the extra steps (and the anxiety that comes with moving such a big chunk of money).
+Would love to hear your experiences or advice!
+
+**Example 2:**
+> Maxing Tax-Advantaged Accounts Properly (Missing Anything?)
+Hey all, I'd like to ensure I am maxing our all of my tax advantaged accounts to the best of my knowledge. Here are the details
+Company 1: 120k, 6% match, only allows trad/roth 401k contributions
+Company 2: 180k, 6% company contribution of salary end of year, allows after-tax (non-roth) contributions up to 15% of pay + in-plan conversions
+What Id like to do in 2026 (I understand the limits next year may slightly change):
+Contribute the max 24.5k to Company 1 401k (Deferral Limit)
+Contribute the max 15% to Company 2 after-tax and immediately convert to Roth 401k (Mega Back Door Roth)
+Contribute the max ~7k-7,500 to Traditional IRA and convert via Back Door Roth
+Max HSA contribution from only 1 company
+My understanding from reading online is that the 24.5k elective deferral is across all accounts. However, the ~70k total contribution is for each company. Therefore, as long as my 15% contribution + 6% company contribution for company 2 is below that, which it will be, then I should be good to go.
+Is there anything I am misunderstanding?
+Is there anything I am not optimizing in terms of tax-adv accounts? Anything else I should be doing?
+
 
 ### The hardest boundary
 

@@ -51,63 +51,43 @@ whether you hit them:
 
 ---
 
-## 1.
+## 1. Overall accuracy reaches at least 0.70 across all categories
 
-<!-- Your criterion. It must name a number. -->
+Given a held-out test dataset of labeled r/financialindependence posts, the model correctly predicts the primary category for at least 70% of the inputs.
 
-
-
-**Why this target:**
-
-
+**Why this target:** A naive random guess across my 3 categories (`milestone`, `plan`, `query`) yields ~33% accuracy. Setting a 0.70 baseline ensures the classifier provides enough real-world utility to reliably organize community feeds, while leaving room for the inherent ambiguity in open-ended text posts (such as a post that shares a milestone and then asks what to do next, blurring `milestone` and `query`).
 
 ---
 
-## 2.
+## 2. Per-label performance reaches an F1 score of at least 0.55 for every category
 
-<!-- Your criterion. -->
+Given evaluated performance on the held-out test set, no individual post category scores lower than a 0.55 F1 score.
 
-
-
-**Why this target:**
-
-
+**Why this target:** High-volume topics (like generic portfolio questions) easily dominate the training set over minority topics (like specific FIRE milestone celebrations). A hard 0.55 F1 floor prevents the model from achieving a high overall accuracy by completely ignoring lower-frequency labels.
 
 ---
 
-## 3.
+## 3. Agreement with the staff-labeled set reaches at least 80%
 
-<!-- Your criterion. -->
+Given the 30 posts in `data/staff_posts.csv`, labeled under the staff's own taxonomy in `data/staff_taxonomy.md` and scored with `agreement.py`, my labels match the staff's labels on at least 80% (24/30) of the posts.
 
-
-
-**Why this target:**
-
-
+**Why this target:** Financial forum posts frequently blur boundaries (for instance, asking for advice while detailing a personal budget story), and the staff set was deliberately built to include some genuinely ambiguous calls. With only 30 posts, each disagreement moves the rate by more than 3 points, so 80% leaves room for a handful of defensible disagreements without treating the staff's taxonomy as something I should match perfectly.
 
 ---
 
-## 4.
+## 4. Class imbalance stays within a 10% floor and a 60% ceiling in the training set
 
-<!-- Your criterion. -->
+Given the curated training dataset, no single category represents more than 60% or less than 10% of total training samples.
 
-
-
-**Why this target:**
-
-
+**Why this target:** Extreme class skew causes model loss functions to overfit heavily on dominant categories. Setting these explicit boundaries ensures gradient updates remain stable during training, requiring data re-balancing or broader data collection if natural post volume strays outside this window.
 
 ---
 
-## 5.
+## 5. The most-confident third of predictions is at least 20 points more accurate than the least-confident third
 
-<!-- Your criterion. -->
+Given the notebook's confidence report, which ranks test-set predictions by the model's softmax confidence and splits them into thirds, accuracy on the most-confident third (`accuracy_most_confident_third`) is at least 0.85, and at least 20 points higher than accuracy on the least-confident third (`accuracy_least_confident_third`).
 
-
-
-**Why this target:**
-
-
+**Why this target:** High-confidence predictions are typically used for automated user-facing features like auto-tagging or instant routing. If the model's confidence doesn't actually track correctness — if the most- and least-confident thirds score about the same — then confidence is noise and can't be used to gate automated behavior, which is exactly what this gap tests for.
 
 ---
 
