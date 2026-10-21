@@ -54,35 +54,40 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `update`
 
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** A post reporting on the person's own ongoing progress since an earlier post they made, usually referencing or linking back to it.
 
 **Example 1:**
->
+> 3 years into FI/RE update
+By now it's been a little over three years since I've stopped working. The previous posts I shared about my experience were after the first six months and around the one year mark, and it's been interesting to reread them to track how my experience with early retirement has evolved. A lot has happened since — both in the world and in my life — so I thought I'd share an update for anyone interested.
 
 **Example 2:**
->
+> Year 2 Update After $1M: Learning to Live
+Hello! I’ve been back and forth mentally about making this post; I think it’s a good reflection of me moving past my “financial trauma” by not being so obsessed with the financial number as I have been in the past. I like these posts as sort of voicing out my personal journey for others to resonate or learn from.
+
+### `plan`
+
+**Definition:** A post proposing or refining a forward-looking financial strategy, often asking for feedback on choices not yet made.
+
+**Example 1:**
+> My 5-Year FI Plan: What Am I Missing?
+Hi folks! I'm aiming to reach financial independence by age 32 (in 5 years) and am refining my contribution strategy and early withdrawal plan. Would love feedback—especially if my logic checks out and any other strategies or accounts that I am not taking advantage of.
+
+**Example 2:**
+> Making your FIRE Plan “near” bulletproof
+GM All
+Hoping to connect and better understand your strategies in ensuring your portfolio is as close to resilient & bulletproof as possible. It seems many are quick to list their balances, but not so much how they diversified to weather SORR. Let me know where you’re at!
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** update vs plan
 
 **The decision rule I used every time:**
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
      if the tone is heated." -->
 
-
+If the post references the author's own earlier post (linked or just described), it's 'update', even if it also lays out a forward plan.
 
 ---
 
