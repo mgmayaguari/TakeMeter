@@ -122,7 +122,7 @@ Is there anything I am not optimizing in terms of tax-adv accounts? Anything els
 
 ### The hardest boundary
 
-**Which two labels:** update vs plan
+**Which two labels:** milestone vs plan
 
 **The decision rule I used every time:**
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
@@ -232,16 +232,25 @@ of next unit's variance. -->
 <!-- Both models on the same posts. `python baseline.py --trained results.json`
      prints this table for you. -->
 
-| Measure | Baseline | Trained | Difference |
-|---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Measure | Baseline |
+|---|---|
+| Overall accuracy | 0.333 |
+| Macro F1 | 0.296 |
+| F1 — `milestone` | 0.556 |
+| F1 — `plan` | 0.333 |
+| F1 — `query` | 0.000 |
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
+
+I predict overall accuracy around 0.70–0.75 and macro F1 around 0.60–0.65. The
+baseline's `query` F1 of 0.000 tells me zero-shot can't find that category at
+all from the definition alone, so I expect `query` to improve the most once
+the model sees labeled examples of what a question-asking post actually looks
+like. `plan` is my smallest label (31 of 181 rows, so only about 5 in the test
+split), so I expect its F1 to land lower than `milestone` and `query` — maybe
+0.50–0.60 — and to swing the most across the three seeds in unit 6.
 
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
