@@ -42,7 +42,14 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-
+This project sorts posts from r/financialindependence, a community for people
+pursuing financial independence and early retirement (FIRE). Every post falls
+into one of three buckets: a **milestone** (someone sharing progress on their
+own FIRE journey, often following up on an earlier post), a **plan** (someone
+proposing or refining a forward-looking financial strategy), or a **query**
+(someone asking a direct question and looking for an answer). The classifier
+reads a post and predicts which of the three it is, so posts could eventually
+be sorted or routed by what kind of post they are.
 
 ---
 
@@ -201,9 +208,9 @@ of next unit's variance. -->
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* I had a `tip` label with 23 posts that I was unsure about, so I asked it to go through each of those 23 posts and decide, against my actual `milestone`/`plan`/`query` definitions, whether it fit one of the three existing labels or should just be deleted.
+- *What came back:* It read all 23 posts and returned a per-post call with a reason tied to my definitions — 4 fit an existing label (e.g. a post explicitly following up on the author's own earlier post matched `milestone`; a post directly asking the community a question matched `query`), and the other 19 were general advice, news, or reflection posts that didn't fit any of my three definitions.
+- *What I changed:* I checked its reasoning against my own definitions rather than taking the calls at face value, and agreed with all 4 relabels and all 19 deletions — none needed overriding, but I would not have accepted a relabel that didn't point to a specific line in my definition.
 
 **Moment 2**
 
