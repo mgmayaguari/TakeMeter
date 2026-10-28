@@ -140,7 +140,7 @@ If the post references the author's own earlier post (linked or just described),
 **Where the posts came from:** Manually browsed and copy-pasted from Reddit, all from r/financialindependence, reading real posts directly on the subreddit rather than scraping or searching for specific keywords.
 
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-I manually reviewed 30 posts and labeled them cold from scratch. For the remaining posts, I used an AI model (Gemini) to pre-label them. If the classification was straightforward with no ambiguity, it was marked as cold. If the model could not confidently make a decision and required my manual review and final call, it was marked as pre-labelled.
+Say so plainly — the disclosure is required, not penalised. --> I manually reviewed 30 posts and labeled them cold from scratch. For the remaining posts, I used an AI model (Gemini) to pre-label them. If the classification was straightforward with no ambiguity, it was marked as cold. If the model could not confidently make a decision and required my manual review and final call, it was marked as pre-labelled.
 
 **Counts per label:**
 
@@ -183,17 +183,25 @@ I manually reviewed 30 posts and labeled them cold from scratch. For the remaini
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** `distilbert-base-uncased`
 
-**Settings:** <!-- epochs, learning rate, batch size, seed -->
+**Settings:** 3 epochs, learning rate 2e-5, batch size 16, seed 42 — all the notebook's defaults.
 
-**Anything I changed from the defaults, and why:**
+**Anything I changed from the defaults, and why:** Nothing. I kept the provided defaults for this run.
 
 **Split sizes:** <!-- train / val / test, and per-label counts in the test
 split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
 
+70/15/15 stratified split of 200 rows: 139 train, 31 val, 30 test.
 
+| Label | Train | Val | Test |
+|---|---|---|---|
+| `milestone` | 57 | 13 | 12 |
+| `plan` | 25 | 5 | 6 |
+| `query` | 57 | 13 | 12 |
+
+`plan` has only 6 examples in the test split, below the notebook's ~8-example threshold for a stable F1. With that few, a single misclassified post swings `plan`'s F1 by over 0.15 — its score should be read as noisy, not as a reliable measure of how well the model actually learned that label.
 
 ---
 
@@ -218,7 +226,7 @@ of next unit's variance. -->
 - *What came back:*
 - *What I changed:*
 
-**Pre-labelling disclosure:**
+**Pre-labelling disclosure:** Gemini pre-labelled most of the 200 posts (see **How I labelled them** in The Dataset section above). I read every post against my own definitions and made the final call myself; of the 170 Gemini touched, 166 matched what I'd have picked and were marked `cold`, and 4 needed correcting and were marked `pre-labelled`. The other 30 I labelled from scratch with no AI involved.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
