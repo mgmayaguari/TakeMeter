@@ -128,7 +128,7 @@ Is there anything I am not optimizing in terms of tax-adv accounts? Anything els
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
      if the tone is heated." -->
 
-If the post references the author's own earlier post (linked or just described), it's 'update', even if it also lays out a forward plan.
+If the post references the author's own earlier post (linked or just described), it's `milestone`, even if it also lays out a forward plan.
 
 ---
 
@@ -137,19 +137,19 @@ If the post references the author's own earlier post (linked or just described),
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:**
+**Where the posts came from:** Manually browsed and copy-pasted from Reddit, all from r/financialindependence, reading real posts directly on the subreddit rather than scraping or searching for specific keywords.
 
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-Say so plainly — the disclosure is required, not penalised. -->
+I manually reviewed 30 posts and labeled them cold from scratch. For the remaining posts, I used an AI model (Gemini) to pre-label them. If the classification was straightforward with no ambiguity, it was marked as cold. If the model could not confidently make a decision and required my manual review and final call, it was marked as pre-labelled.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| `milestone` | 82 | 41% |
+| `query` | 82 | 41% |
+| `plan` | 36 | 18% |
+| **Total** | 200 | 100% |
 
 **Three hard cases**
 
@@ -157,25 +157,25 @@ Say so plainly — the disclosure is required, not penalised. -->
      been, and what you chose. These are worth more than the easy 190. -->
 
 **1.**
-> *The post:*
+> *The post:* "Rate my financial situation / plan" — a long post laying out the author's income, investments, and a specific long-term earning and withdrawal strategy, then asking the subreddit to weigh in and offering a direct question ("Am I wrong about this?") about rolling a traditional IRA into a Roth.
 >
-> *Could have been:*
+> *Could have been:* `plan` or `query`.
 >
-> *I chose, because:*
+> *I chose, because:* I called it `query`. The post's own framing ("rate my... plan") and its specific, answerable question made the ask itself the point of the post, not the strategy — a `plan` post proposes a strategy as the subject; here the strategy is background for a question being asked of the reader.
 
 **2.**
-> *The post:*
+> *The post:* "FIRE at 42" — announces that the author retired that day, with a numbers summary of current assets and income, followed by a long "FIRE Plan Summary" section describing how income will cover expenses for years into the future.
 >
-> *Could have been:*
+> *Could have been:* `milestone` or `plan`.
 >
-> *I chose, because:*
+> *I chose, because:* I called it `milestone`. The post's reason for existing is the announcement — "today is the day" — and the forward-looking plan section explains how that milestone holds up rather than asking for feedback on choices not yet made. Per my decision rule, the event being reported outweighs a plan discussed in service of it.
 
 **3.**
-> *The post:*
+> *The post:* "LivingAFI posts for the first time in about 5 years" — the author shares and summarizes someone *else's* update post (not their own), then poses several open questions the linked post raises ("What will I do with my time after I retire?").
 >
-> *Could have been:*
+> *Could have been:* `milestone` or `query`.
 >
-> *I chose, because:*
+> *I chose, because:* I called it `milestone`, but this one genuinely stretched my definition, which says "the person's own ongoing progress" — here the progress being reported belongs to someone the author is merely sharing, not the author themselves. I kept `milestone` because the content and structure (an update since a prior post, after a long gap) matches the label's spirit even though the "own" part of my definition doesn't cleanly apply. This is the one case where I'd say my definition has a gap worth tightening: it doesn't say what to do when a post reports someone else's milestone rather than the author's.
 
 ---
 
