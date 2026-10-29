@@ -240,13 +240,13 @@ of next unit's variance. -->
 <!-- Both models on the same posts. `python baseline.py --trained results.json`
      prints this table for you. -->
 
-| Measure | Baseline |
-|---|---|
-| Overall accuracy | 0.333 |
-| Macro F1 | 0.296 |
-| F1 — `milestone` | 0.556 |
-| F1 — `plan` | 0.333 |
-| F1 — `query` | 0.000 |
+| Measure | Baseline | Trained | Difference |
+|---|---|---|---|
+| Overall accuracy | 0.333 | 0.500 | +0.167 |
+| Macro F1 | 0.296 | 0.336 | +0.040 |
+| F1 — `milestone` | 0.556 | 0.375 | −0.181 |
+| F1 — `plan` | 0.333 | 0.000 | −0.333 |
+| F1 — `query` | 0.000 | 0.632 | +0.632 |
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
@@ -264,7 +264,23 @@ split), so I expect its F1 to land lower than `milestone` and `query` — maybe
 <!-- If the baseline matched your trained model, your fine-tuning added
      nothing — and that is a real finding, not a failure. Say it plainly. -->
 
+My prediction was wrong, and wrong in an uneven way. I predicted 0.70–0.75
+overall accuracy; the trained model got 0.500 — well short. The one part I got
+right was `query`: I predicted it would improve the most, and it did, going
+from a baseline of 0.000 to 0.632, now the best-performing label. But I
+predicted `plan` would land around 0.50–0.60 even with its thin test split —
+instead it collapsed to 0.000, worse than the baseline's 0.333. And I didn't
+predict `milestone` would drop at all; it fell from 0.556 to 0.375, even
+though it's my largest label.
 
+So fine-tuning didn't uniformly help — the confusion matrix confirms it:
+the model called `query` on 9 of 12 real `milestone` posts and 5 of 6 real
+`plan` posts, while getting all 12 real `query` posts right. It didn't learn
+three boundaries, it learned to say `query` almost by default and happens to
+be rewarded for it because `query` is one of the two largest labels. `plan`'s
+collapse to 0.000 is consistent with that — with only 25 training examples
+and 6 in test, it likely never got enough weight in training to compete with
+`query` as a guess.
 
 ---
 
@@ -273,31 +289,50 @@ split), so I expect its F1 to land lower than `milestone` and `query` — maybe
 <!-- Five criteria across three seeds. The notebook's section 6 prints the
      spread table; the Target and Verdict columns are yours. -->
 
-| Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
-|---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| Measure | Seed 42 | Seed 7 | Seed 2024 | Spread |
+|---|---|---|---|---|
+| Overall accuracy | 0.500 | 0.567 | 0.567 | 0.067 |
+| Macro F1 | 0.336 | 0.418 | 0.417 | 0.082 |
+| F1 — `milestone` | 0.375 | 0.609 | 0.667 | 0.292 |
+| F1 — `plan` | 0.000 | 0.000 | 0.000 | 0.000 |
+| F1 — `query` | 0.632 | 0.645 | 0.583 | 0.062 |
+
+Accuracy moved 0.067 across seeds. Enough that a criterion landing within that band can't really be called either way.
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
+| true \ predicted | milestone | plan | query |
 |---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| **milestone** | 3 | 0 | 9 |
+| **plan** | 1 | 0 | 5 |
+| **query** | 0 | 0 | 12 |
+
+Biggest confusion: 9 real `milestone` posts called `query`.
+The other direction: 0 real `query` posts called `milestone`.
+
+That's lopsided — the model leans toward `query` on this pair.
+A direction like that usually points at your labelling rather than the
+model. Your agreement report is the thing that can tell you which.
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
      direction. "7 real analysis posts were called hot_take and only 3 went the
      other way" is a direction, not just an error rate. -->
 
-
+9 real `milestone` posts were called `query`, and 0 went the other way — every
+single error on this pair ran in one direction. That's not the model finding
+`milestone` and `query` equally hard to tell apart; it's the model specifically
+failing to recognize `milestone` and defaulting to `query` instead. It's also
+the one boundary my taxonomy never wrote a decision rule for — I have an
+explicit rule for `milestone` vs `plan`, but nothing for `milestone` vs
+`query`, even though hard case 3 (the LivingAFI post) already showed me that
+boundary existed. A model can't learn a rule I never wrote down, so this
+result is at least partly a labelling gap, not just a model one — my agreement
+report should tell me whether I was actually applying some unstated version
+of that rule consistently or just guessing case by case.
 
 ---
 
