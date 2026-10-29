@@ -343,11 +343,11 @@ of that rule consistently or just guessing case by case.
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Overall accuracy | ≥ 0.70 | **MISSED** | Accuracy was 0.500, 0.567, 0.567 across the three seeds — not one came close to 0.70. |
+| 2 | Per-label F1 | ≥ 0.55 for every label | **MISSED** | `plan` F1 was 0.000 in all three seeds. `milestone` also missed in seed 42 (0.375), though it passed in seeds 7 and 2024 (0.609, 0.667). The target has to hold in every seed, and `plan` never did. |
+| 3 | Staff agreement | ≥ 80% (24/30) | **MET** | `agreement.py` against `data/staff_labels.csv` gave 26/30 = 87%. |
+| 4 | Class balance (train) | 10%–60% per label | **MET** | Training split (139 rows): `milestone` 41% (57), `query` 41% (57), `plan` 18% (25) — all inside the band. |
+| 5 | Confidence gap | most-confident third ≥ 0.85, and ≥ 20 points over least-confident third | **MISSED** | Most-confident-third accuracy was 0.70, 0.60, 0.70 — never within reach of 0.85, even though the 20-point gap itself held in seeds 42 and 2024 (0.40 and 0.40) and exactly met it in seed 7 (0.20). |
 
 **Diagnoses**
 
@@ -360,6 +360,11 @@ of that rule consistently or just guessing case by case.
      have that can tell a LABELLING problem from a MODEL problem, and this
      section is graded on whether you used it that way. -->
 
+**Criterion 1 (overall accuracy):** My staff-set agreement rate is 87% — high enough that I don't think I'm an inconsistent labeller in general, which points away from "I applied my own taxonomy loosely" as the main cause. The confusion matrix (seed 42) shows the real driver: 9 of 12 real `milestone` posts and 5 of 6 real `plan` posts were called `query`. That's a model that learned one label well and defaulted to it, not a model confused symmetrically across all three — consistent with too little `plan` data and a genuinely under-specified `milestone`-vs-`query` boundary (see below).
+
+**Criterion 2 (`plan` F1 = 0.000, every seed):** This is "too few examples for a label," not noise — `plan` has only 25 training rows and 6 in test, well under the notebook's own ~20-example warning and the smallest of my three labels by a wide margin. A result of exactly 0.000 in all three seeds (not just low, but *zero* every time) means the model never once predicted `plan` on any test post, in any split — that's a label the model couldn't learn from this amount of data, not a boundary it got slightly wrong.
+
+**Criterion 5 (confidence gap):** The most-confident third tops out at 0.70, well short of 0.85. Given criterion 1's diagnosis, this is the same root cause wearing a different hat: since the model defaults to `query` whenever it's unsure, many of its "confident" predictions are confidently-wrong `query` guesses on real `milestone`/`plan` posts, not genuine high-certainty correct calls. Confidence tracking correctness at all (the 20-point gap mostly held) shows the signal isn't pure noise — it just can't clear 0.85 while the model is this biased toward one label.
 
 
 ---
@@ -372,7 +377,7 @@ of that rule consistently or just guessing case by case.
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** 26 / 30 = 87%
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
@@ -395,26 +400,42 @@ of that rule consistently or just guessing case by case.
      what you did across your own 200. -->
 
 **1.**
-> *The post:*
+> *The post:* "Carbon plates aren't the whole story. My times dropped 2% in the shoes and another 2% the following year in the same pair, when the only thing that changed was going from 35 to 50 miles a week."
 >
-> *Staff said / I said:*
+> *Staff said / I said:* `analysis` / `hot_take`
 >
-> *My call, and why:*
+> *My call, and why:* Staff is right. Rule 1 asks whether the checkable fact is load-bearing, and here it is — the post uses the mileage increase (35→50) as the actual reason for the continued 2% gain, explicitly to argue *against* the shoes being the cause. That's structurally identical to the staff's own worked example ("times down 3%, and the shoe rule changed that year — that's the likely cause"). I think I read "aren't the whole story" as a hedge and under-weighted the specific number doing the arguing right after it.
 >
-> *Which pile:*
+> *Which pile:* (a) — the rule covered this exactly, I just applied it loosely.
 
 **2.**
-> *The post:*
+> *The post:* "Nobody actually enjoys the long run. They enjoy having done it, which is a completely different thing, and the sport would be more honest if it said so."
 >
-> *Staff said / I said:*
+> *Staff said / I said:* `hot_take` / `reaction`
 >
-> *My call, and why:*
+> *My call, and why:* Staff is right. Rule 2 is about the writer's own experience vs. a general claim about the world, and this post is explicitly general ("Nobody actually enjoys...") — it's not reporting what the writer themselves just felt. The rule even anticipates my mistake directly: "a post can be heated and still be `hot_take` if it is making a general claim." I think the reflective, slightly confessional tone read as personal to me, but the claim itself is about everyone, not the author.
 >
-> *Which pile:*
+> *Which pile:* (a) — the rule anticipates this exact confusion and I still made it.
 
-**What the pattern in my disagreements tells me:**
+**3.**
+> *The post:* "Every injury thread on this forum is the same injury and the same three replies."
+>
+> *Staff said / I said:* `hot_take` / `analysis`
+>
+> *My call, and why:* Staff is right, and this is my clearest miss. Rule 1 requires a checkable fact doing the arguing, and there isn't one here — "the same injury and the same three replies" sounds specific but names no actual count, comparison, or measurement. I think the specific-sounding phrasing fooled me into treating it like the data-backed posts, when it's really just a flat assertion with no evidence attached.
+>
+> *Which pile:* (a) — a straightforward misapplication of rule 1, not a gap in it.
 
+**4.**
+> *The post:* "Just realised the shoes I set every PB in this year are the ones I bought by accident in the wrong size."
+>
+> *Staff said / I said:* `reaction` / `hot_take`
+>
+> *My call, and why:* Staff is right. This is entirely about the writer's own situation — their own shoes, their own PBs, their own realization — with no claim about runners or the sport in general. Rule 2 puts this squarely in `reaction`. I think I weighted the wry, almost one-liner tone as "hot_take energy" without checking whether the content was actually a general claim, which it isn't.
+>
+> *Which pile:* (a) — rule covered it, I let tone override content.
 
+**What the pattern in my disagreements tells me:** All four disagreements land in pile (a) — not gaps in the staff's definitions, not defensible alternate readings, just inconsistent application of rules I understood correctly on other posts in the same set. Two rules account for all four misses: rule 1 (is the fact load-bearing?) on 2 of them, and rule 2 (writer vs. world) on the other 2. That's a narrower problem than "I'm an inconsistent labeller" — it's specifically that tone (hedged phrasing, a confessional or wry voice) pulled me away from checking what the rule actually asks. Since my own `milestone`/`plan`/`query` taxonomy has the same kind of tone-driven posts (a reflective "update" can read like a question, a frustrated post can read like a strong claim), I'd expect a similar rate of rule-application slips on my own 200 — evidence that at least part of my model's `milestone`-vs-`query` confusion could be a labelling consistency issue, not purely a data-volume one.
 
 ---
 
